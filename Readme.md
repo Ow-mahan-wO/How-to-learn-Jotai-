@@ -11,7 +11,7 @@
 ## Jotai is based on the new Recoil pattern and library by Facebook. 
 
 # Why we should learn Jotai ?!
-# Redux is often used in large-scale projects due to its ability to maintain states at a large scale. If we want to use state managers in a small project, Redux doesn't seem reasonable and we have to use the context API. However, Jotai comes to our aid and makes managing states in the program easy with its atomic structure and is very fast and convenient. This is one reason to learn Jotai, and another reason may be that we have the opportunity to get acquainted with other architectures and state managers.
+## Redux is often used in large-scale projects due to its ability to maintain states at a large scale. If we want to use state managers in a small project, Redux doesn't seem reasonable and we have to use the context API. However, Jotai comes to our aid and makes managing states in the program easy with its atomic structure and is very fast and convenient. This is one reason to learn Jotai, and another reason may be that we have the opportunity to get acquainted with other architectures and state managers.
 
-## How to learn Jotai ?
+# How to learn Jotai ?
 ## We learn step by step with the official jotai document and its practice. Let's go to start.
