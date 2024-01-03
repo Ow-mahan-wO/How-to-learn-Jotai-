@@ -1,3 +1,4 @@
+
 --> you can Download Pdf this Readme . It is available in the repository files
 
 # How to learn Jotai ?!
@@ -17,3 +18,5 @@
 
 # How to learn Jotai ?
 ## We learn step by step with the official jotai document and its practice. Let's go to start.
+
+# status:not completed
