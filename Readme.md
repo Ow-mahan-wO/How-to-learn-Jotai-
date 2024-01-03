@@ -1,4 +1,4 @@
-
+# Status:not Complete
 --> you can Download Pdf this Readme . It is available in the repository files
 
 # How to learn Jotai ?!
