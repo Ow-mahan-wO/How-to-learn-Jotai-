@@ -24,7 +24,7 @@
 ## Jotai atoms are small isolated pieces of state. Ideally, one atom contains very small data. Here's how you create your first atom.
 
 ```javascript
-import { atom } from 'jotai' ;                                                                                                                                            
+import { atom } from 'jotai' ;                                  
 const counter = atom(0);
 ```
 ## t is as simple to use as React’s integrated (useState) hook, but all state is globally accessible.
@@ -58,10 +58,44 @@ export default function ExLesson1() {
       <p>{count}</p>
     </div>
   )
+}
 ```
 ## As we learned in the above material, we made a number type variable using atoms and stored it inside a variable, and using useAtom, which has a structure similar to useState in React, we were able to update or use it.
 
-#
+# Lesson 2
 
+## Persisting state value.
+## In this lesson, we will take a look at how we can persist the state value to (localStorage) with jotai (atoms). Persisting state to localStorage can be challenging. You might want to persist the user's preferences or data for their next session.
+
+## Jotai (atomWithStorage) is a special kind of atom that automatically syncs the value provided to it with (localstorage) or sessionStorage, and picks the value upon the first load automatically. It's available in the jotai/utils module. To persist our theme atom simply create it with the atomWithStorage atom.
+
+<span style="color:red;">
+Note: In first Parameter we pass keyword for toggle and second Parameter we pass that status (true/false)
+</span>
+
+```javascript
+const theme = atomWithStorage('dark', false)
+```
+# Example Lesson 2 :
+## In this Example we have a Toggler button for change new Theme in app ,
+## So Click that button and to next Step we Refresh page and Theme changed and not be set to default theme . this is Amazing
+
+```javascript
+import { useAtom } from 'jotai';
+import { atomWithStorage } from 'jotai/utils';
+
+const theme = atomWithStorage('dark', false);
+
+export default function ExLesson2() {
+  const [Theme, setTheme] = useAtom(theme);
+  const handleThemeClick = () => setTheme(!Theme);
+  return (
+    <div className={Theme? 'dark': 'light'}>
+      <h1>This is a theme switcher</h1>
+      <button onClick={handleThemeClick}>{Theme? 'DARK': 'LIGHT'}</button>
+    </div>
+  )
+}
+```
 
 # status:not completed
