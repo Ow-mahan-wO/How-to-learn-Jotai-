@@ -19,4 +19,49 @@
 # How to learn Jotai ?
 ## We learn step by step with the official jotai document and its practice. Let's go to start.
 
+# Lesson 1:
+## Creating your first atom
+## Jotai atoms are small isolated pieces of state. Ideally, one atom contains very small data. Here's how you create your first atom.
+
+```javascript
+import { atom } from 'jotai' ;                                                                                                                                            
+const counter = atom(0);
+```
+## t is as simple to use as React’s integrated (useState) hook, but all state is globally accessible.
+
+```javascript
+const [count, setCounter] = useAtom(counter);
+```
+## The atom we created is to be passed to (useState) hook with the help of jotai (useAtom) function, which returns an array, where the 1st element is the value of atom, and the 2nd element is a function used to set the value of the atom.
+## Jotai considers anything to be an atom so you can create any type of atom you want whether it is atom of objects, arrays, or nested objects.
+
+```javascript
+const friendObj = atom({ name: "Shahin", online: false });
+const cities = atom([ "Shiraz", "Tehran", "Kerman" ]);
+const nestedObj = atom({ friend1: { name: "Korosh", age: 20 }}) 
+```
+
+# Example Lesson1 :
+## in this example we write a very small app with jotai so with Click in “Click for increased ” Button add 1 count to counter variable and more ….
+
+```javascript
+import { atom, useAtom } from 'jotai';
+
+const counter = atom(0);
+
+export default function ExLesson1() {
+  const [count, setCounter] = useAtom(counter);
+  const setCountHandler = () => setCounter(count => count +=1);
+  return (
+    <div>
+      <button onClick={ setCountHandler }>Click for Increased</button>
+      <p>{count}</p>
+    </div>
+  )
+```
+## As we learned in the above material, we made a number type variable using atoms and stored it inside a variable, and using useAtom, which has a structure similar to useState in React, we were able to update or use it.
+
+#
+
+
 # status:not completed
