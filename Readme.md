@@ -20,6 +20,12 @@
 ## We learn step by step with the official jotai document and its practice. Let's go to start.
 
 # Lesson 1:
+## at first you most install jotai in Project:
+```
+npm install jotai
+## 
+yarn add jotai
+```
 ## Creating your first atom
 ## Jotai atoms are small isolated pieces of state. Ideally, one atom contains very small data. Here's how you create your first atom.
 
