@@ -64,21 +64,17 @@ export default function ExLesson1() {
 
 # Lesson 2
 
-## Persisting state value.
-## In this lesson, we will take a look at how we can persist the state value to (localStorage) with jotai (atoms). Persisting state to localStorage can be challenging. You might want to persist the user's preferences or data for their next session.
+## Persisting state value. In this lesson, we will take a look at how we can persist the state value to (localStorage) with jotai (atoms). Persisting state to localStorage can be challenging. You might want to persist the user's preferences or data for their next session.
 
 ## Jotai (atomWithStorage) is a special kind of atom that automatically syncs the value provided to it with (localstorage) or sessionStorage, and picks the value upon the first load automatically. It's available in the jotai/utils module. To persist our theme atom simply create it with the atomWithStorage atom.
 
-<span style="color:red;">
-Note: In first Parameter we pass keyword for toggle and second Parameter we pass that status (true/false)
-</span>
+## Note: In first Parameter we pass keyword for toggle and second Parameter we pass that status (true/false)
 
 ```javascript
 const theme = atomWithStorage('dark', false)
 ```
 # Example Lesson 2 :
-## In this Example we have a Toggler button for change new Theme in app ,
-## So Click that button and to next Step we Refresh page and Theme changed and not be set to default theme . this is Amazing
+## In this Example we have a Toggler button for change new Theme in app , So Click that button and to next Step we Refresh page and Theme changed and not be set to default theme . this is Amazing
 
 ```javascript
 import { useAtom } from 'jotai';
