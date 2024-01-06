@@ -20,7 +20,7 @@
 ## We learn step by step with the official jotai document and its practice. Let's go to start.
 
 # Lesson 1:
-## at first you most install jotai in Project:
+## at first you most install jotai in Project:"
 ```
 npm install jotai
 ## 
