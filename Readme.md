@@ -26,24 +26,6 @@ npm install jotai
 ## 
 yarn add jotai
 ```
-## and in second step we should set Provider for jotai to be able to access them:
-```javascript
-./main.jsx
-
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-
-import {Provider} from 'jotai'
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-  <Provider>
-    <App />
-  </Provider>  
-  </React.StrictMode>,
-)
-```
 ## Creating your first atom
 ## Jotai atoms are small isolated pieces of state. Ideally, one atom contains very small data. Here's how you create your first atom.
 
