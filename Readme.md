@@ -20,7 +20,7 @@
 
 # How to learn Jotai ?
 
-### We learn step by step with the official jotai document and its practice. Let's go to start.
+### We learn step by step with the official jotai document and its practice and in the end let's write a todo list project with jotai!!. Let's go to start.
 
 # Lesson 1:
 
