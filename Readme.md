@@ -200,4 +200,44 @@ const offlineFriends = atom((get) =>
 
 ### it is greate and easy!!!
 
+# Lesson 4:
+### Read Write atoms :
+### These atoms are the combination of both read-only and write-only atoms.
+
+```javascript
+const count = atom(1);
+export const readWriteAtom = atom((get) => get(count),
+(get, set) => {
+    set(count, get(count) + 1);
+  },
+);
+```
+### The first parameter is for reading and the second is for modifying the atom value. Since the readWriteAtom is capable to read and set the original atom value, so we can only export readWriteAtom atom and can hide the original atom in a smaller scope.
+
+## Example Lesson 4:
+
+```javascript
+import { atom, useAtom } from 'jotai';
+
+const counter = atom(1);
+export default function ExLesson4() {
+  
+ const readWriteAtom = atom((get) => get(counter),
+(get, set) => {
+    set(counter, get(counter) + 1);
+  },
+);
+  const [count,setCount]=useAtom(readWriteAtom)
+  return (
+    <div>
+      <h1>{count}</h1>
+      <button onClick={setCount}>Click</button>
+    </div>
+  )
+}
+```
+### In this example we have a button and h1 element that show count and when clicked button, count increased 1 and update element value:
+
+![Ex lesson 4 output](./images/outputExLesson4.PNG "output")
+
 # status:not completed
