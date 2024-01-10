@@ -384,4 +384,108 @@ export default function ExLesson6() {
 ### In example above we have a count atom that read with async and do it count * 5 
 ### And in suspense we pass a fallback props with value that wana show in loading new value  .
 
+# Lesson 7
+## Async Write Atoms
+## In Async write atoms the write function of atom returns a promise.
+## We pass two parameter in atom , first parameter all the time like write atoms , are null and second parameter are callback fn (set , get) with this the difference we write async keyword before it. 
+## Like this :
+
+```javascript
+const counter = atom(0);
+const asyncAtom = atom(null, async (set, get) => {
+    // await something
+    set(counter, get(counter) + 1);
+});
+```
+## This is important that , An important take here is that async write function does not trigger the Suspense
+### But an interesting pattern that can be achieved with Jotai is switching from async to sync to trigger suspending when wanted.
+
+```javascript
+const request = async () => fetch('https://api/...').then((res) => res.json())
+const baseAtom = atom(0)
+const Component = () => {
+  const [value, setValue] = useAtom(baseAtom)
+  const handleClick = () => {
+    setValue(request()) // Will suspend until request resolves
+  }
+  // ...
+}
+```
+## Example Lesson 7 :
+### In this example we have two component (Suspence , AsyncComponent) 
+### In AsyncComponent we have a counter atom that with Click in inc Button increased and fetch data of JsonPlaceholder api (fake api) and show it.
+### And in Suspence we have a default object with data (id,title,etc.) and write Async request for get data in api and so on we take data  and set in useAtom till we can use them .
+### And set Click event on button, until the click on button we set request data on atom .
+
+```javascript
+./App.js
+
+import { atom, useAtom } from 'jotai';
+import Suspense from './Suspense.js';
+
+const counter = atom(1);
+const asyncAtom = atom(null, async (get, set) => {
+    await fetch('https://jsonplaceholder.typicode.com/todos/');
+    set(counter, get(counter) + 1);
+});
+function AsyncComponent() {
+  const [count] = useAtom(counter);
+  const [, incCounter] = useAtom(asyncAtom);
+  return (
+    <div className="app">
+      <h1>{count}</h1>
+      <button onClick={incCounter}>inc</button>
+    </div>
+  )
+}
+export default function ExLesson7() {
+   return (
+    <div>
+      <AsyncComponent />
+      <Suspense />
+    </div>
+  )
+}
+```
+```javascript
+./Suspence.js
+
+import { atom, useAtom } from 'jotai';
+import { Suspense } from 'react'
+
+const todo = {
+    id: 0,
+    title: 'how to learn jotai',
+    completed: true
+};
+
+const request = async () => (
+    fetch('https://jsonplaceholder.typicode.com/todos/5')
+        .then((res) => res.json())
+)
+const todoAtom = atom(todo);
+
+function Component() {
+  const [todoGoal, setGoal] = useAtom(todoAtom);
+  const handleClick = () => {
+    setGoal(request());
+  }
+  return (
+    <div>
+      <p>Todays Goal: {todoGoal.title}</p>
+      <button onClick={handleClick}>New Goal</button>
+    </div>
+  )
+}
+
+export default function AsyncSuspense() {
+   return (
+    <div>
+      <Suspense fallback={<span>loading...</span>}>
+        <Component />
+      </Suspense>
+    </div>
+  )
+}
+```
 # status:not completed
