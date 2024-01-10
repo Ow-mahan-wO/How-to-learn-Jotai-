@@ -20,7 +20,7 @@
 
 # How to learn Jotai ?
 
-### We learn step by step with the official jotai document and its practice and in the end let's write a todo list project with jotai!!. Let's go to start.
+### We learn step by step with the official jotai document and its practice. Let's go to start.
 
 # Lesson 1:
 
@@ -239,5 +239,149 @@ export default function ExLesson4() {
 ### In this example we have a button and h1 element that show count and when clicked button, count increased 1 and update element value:
 
 ![Ex lesson 4 output](./images/outputExLesson4.PNG "output")
+
+# Lesson 5
+
+### Atom Creators:
+### An atom creator means simply a function that returns an atom or a set of atoms. It's just a function and it's not some features that the library provides, but it's an important pattern to make a fairly complex use case. This avoids the boilerplate of having to set up another atom just to update the state of the first.
+
+```javascript
+const createCountIncreasedAtoms = (initialValue) => {
+  const InitialAtom = atom(initialValue)
+  const ValueAtom = atom((get) => get(InitialAtom))
+  const IncreamentAtom = atom(null, (get, set) => set(InitialAtom, (n) => n + 1))
+  return [ValueAtom, IncreamentAtom]
+}
+
+const [TestAtom1, TestIncAtom1] = createCountIncreasedAtoms(0)
+const [TestAtom2, TestIncAtom2] = createCountIncreasedAtoms(0)
+```
+### Consider this case that use it of write atoms that we learned in previous Lessons: 
+
+```javascript
+const TestAtom1 = atom(0);
+const TestAtom2 = atom(0);
+const TestincAtom1 = atom(null, (get, set) => {
+   set(TestAtom1, n => n + 1);
+});
+const TestincAtom2 = atom(null, (get, set) => {
+   set(TestAtom2, n => n + 1);
+});
+```
+### Although you can attach the suitable actions to the setter of the respective atom, but this also increases boilerplate code when there are more atoms in your code.
+## So simply replace this with the atom creators function.
+### how do we do this ?! like example below.
+
+# Example Lesson5 :
+
+```javascript
+import { atom, useAtom } from 'jotai'
+
+const createCountIncreasedAtoms = (initialValue) => {
+  const InitialAtom = atom(initialValue)
+  const ValueAtom = atom((get) => get(InitialAtom))
+  const IncreamentAtom = atom(null, (get, set) => set(InitialAtom, (n) => n + 1))
+  return [ValueAtom, IncreamentAtom]
+}
+
+const [TestAtom1, TestIncAtom1] = createCountIncreasedAtoms (0)
+const [TestAtom2, TestIncAtom2] = createCountIncreasedAtoms (0)
+
+function ExLesson5() {
+  const [TestCount1] = useAtom(TestAtom1)
+  const [, incTest1] = useAtom(TestIncAtom1)
+  const [TestCount2] = useAtom(TestAtom2)
+  const [, incTest2] = useAtom(TestIncAtom2)
+
+  const onClick1 = () => {
+    incTest1()
+  }
+  const onClick2 = () => {
+    incTest2()
+  }
+
+  return (
+    <>
+      <div>
+        <span>{TestCount1}</span>
+        <button onClick={onClick1}>incTest1</button>
+      </div>
+      <div>
+        <span>{TestCount2}</span>
+        <button onClick={onClick2}>incTest2</button>
+      </div>
+    </>
+  )
+}
+```
+
+![Ex lesson 5 output](./images/outputExLesson5.PNG "output")
+
+### in this example we have two atoms that should be update similar each other .
+### we write a atom creator and handle proccess in that and make it reusable , with pass parameter to custome value in atom creator function .
+
+# Lesson 6 
+## Async Read Atoms:
+## Using async atoms, you gain access to real-world data while still managing them directly from your atoms and with incredible ease.
+## We separate async atoms in two main categories , Async read atoms and Async write atoms.
+## Like example below :
+
+```javascript
+const counter = atom(0);
+const asyncAtom = atom(async (get) => get(counter) * 5);
+```
+## Jotai is inherently leveraging Suspense to handle asynchronous flows.
+
+```javascript
+<Suspense fallback={<span>loading...</span>}>
+      <AsyncComponent />
+</Suspense>
+```
+### But there is a more jotai way of doing this with the loadable api present in jotai/utils. By simply wrapping the atom in loadable util and it returns the value with one of the three states: loading, hasData and hasError.
+
+```javascript
+import { loadable } from "jotai/utils"
+import { atom, useAtom } from 'jotai'
+
+const countAtom = atom(0);
+const asyncAtom = atom(async (get) => get(countAtom));
+const loadableAtom = loadable(asyncAtom)
+const AsyncComponent = () => {
+  const [value] = useAtom(loadableAtom)
+  if (value.state === 'hasError') return <div>{value.error}</div>
+  if (value.state === 'loading') {
+    return <div>Loading...</div>
+  }
+  return <div>Value: {value.data}</div>
+```
+
+# Example Lessson 6 :
+
+```javascript
+import { atom, useAtom } from 'jotai';
+import { Suspense } from 'react'
+
+const counter = atom(1);
+const asyncAtom = atom(async (get) => get(counter) * 5);
+
+function AsyncComponent() {
+  const [asyncCount] = useAtom(asyncAtom);
+  return (
+    <div className="app">
+      <h1>{asyncCount}</h1>
+    </div>
+  )
+}
+
+export default function ExLesson6() {
+   return (
+    <Suspense fallback={<span>loading...</span>}>
+      <AsyncComponent />
+    </Suspense>
+  )
+}
+```
+### In example above we have a count atom that read with async and do it count * 5 
+### And in suspense we pass a fallback props with value that wana show in loading new value  .
 
 # status:not completed
