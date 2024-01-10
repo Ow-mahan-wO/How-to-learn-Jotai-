@@ -320,6 +320,7 @@ function ExLesson5() {
 ### in this example we have two atoms that should be update similar each other .
 ### we write a atom creator and handle proccess in that and make it reusable , with pass parameter to custome value in atom creator function .
 
+<<<<<<< HEAD
 # Lesson 6 
 ## Async Read Atoms:
 ## Using async atoms, you gain access to real-world data while still managing them directly from your atoms and with incredible ease.
@@ -489,3 +490,6 @@ export default function AsyncSuspense() {
 }
 ```
 # status:not completed
+=======
+# status:not completed
+>>>>>>> 075d586f32eb38c527cec8b0c7bf27439bb2c66c
