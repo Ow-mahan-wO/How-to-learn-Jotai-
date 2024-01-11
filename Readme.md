@@ -489,7 +489,271 @@ export default function AsyncSuspense() {
   )
 }
 ```
+![Ex lesson 7 output](./images/outputExLesson7.PNG "output")
+
+# Lesson 8 
+### This is an overview of the atom creators/hooks utilities that can be found under jotai/utils. We already covered atomWithStorage and loadable API in previous lessons. 
+### And we are going to learn a few more together.
+
+### 1- atomWithReset Creates an atom that could be reset to its initialValue with useResetAtom hook. It works exactly the same way as primitive atom would, but you are also able to set it to a special value RESET.
+
+```javascript
+import { atomWithReset } from 'jotai/utils'
+
+const counter = atomWithReset(1)
+
+as easy as that.
+So going write a example :
+
+import { useAtom } from 'jotai';
+import { atomWithReset, useResetAtom } from 'jotai/utils';
+
+const counter = atomWithReset(1);
+
+export default function Counter() {
+  const [count, setCount] = useAtom(counter);
+  const reset = useResetAtom(counter);
+
+  const inc = () => setCount(c => c * 2);
+
+  return (
+    <div className="counter">
+      <p className="util">1. atomWithReset</p>
+      <p>{count}</p>
+      <div>
+        <button onClick={inc}>Inc</button>
+        <button onClick={reset}>Reset Count</button>
+      </div>
+    </div>
+  );
+}
+```
+
+### In this example we have two button of names Inc(that when click on them increased count atom) and Reset Count(that when click on them reset count atom to initial value with atomWithReset()).
+
+### 2.selectAtom This function creates a derived atom whose value is a function of the original atom's value, determined by selector. The selector function runs whenever the original atom changes; it updates the derived atom only if equalityFn reports that the derived value has changed. By default, equalityFn is reference equality, but you can supply your favorite deep-equals function to stabilize the derived value where necessary.
+
+```javascript
+const defaultPerson = {
+    name: {
+      first: ‘Mahan’,
+      last: ‘Heydari’,
+    },
+    birth: {
+      year: 2005,
+      month:’nov’,
+      day: 19,
+    }
+  }
+  
+  // Original atom.
+  const personAtom = atom(defaultPerson)
+  const nameAtom = selectAtom(personAtom, (person) => person.name, deepEqual)
+
+So going write a example :
+
+import { atom, Provider, useAtom } from "jotai";
+import { selectAtom } from "jotai/utils";
+import { useRef, useEffect } from "react";
+import { isEqual } from 'lodash-es';
+
+const defaultPersonData = {
+  name: {
+    first: "Mahan",
+    last: "Heydari"
+  },
+  birth: {
+    year: 2005,
+    month: "nov",
+    day: 19,
+    time: {
+      hour: 0,
+      minute: 0
+    }
+  }
+};
+
+// Original atom.
+const personDataAtom = atom(defaultPersonData);
+
+const nameAtom = selectAtom(personDataAtom, (person) => person.name);
+const birthAtom = selectAtom(personDataAtom, (person) => person.birth, isEqual);
+
+const useCommitCount = () => {
+  const rerenderCountRef = useRef(0);
+  useEffect(() => {
+    rerenderCountRef.current += 1;
+  });
+  return rerenderCountRef.current;
+};
+
+// Rerenders when nameAtom changes.
+const DisplayName = () => {
+  const [name] = useAtom(nameAtom);
+  const n = useCommitCount();
+  return (
+    <div>
+      Name: {name.first} {name.last}: re-rendered {n} times
+    </div>
+  );
+};
+
+// Re-renders when birthAtom changes.
+const DisplayBirthday = () => {
+  const [birth] = useAtom(birthAtom);
+  const n = useCommitCount();
+  return (
+    <div>
+      Birthday:
+      {birth.month}/{birth.day}/{birth.year}: (re-rendered {n} times)
+    </div>
+  );
+};
+
+const SwapNames = () => {
+  const [person, setPerson] = useAtom(personDataAtom);
+  const handleChange = () => {
+    setPerson({
+      ...person,
+      name: { first: person.name.last, last: person.name.first }
+    });
+  };
+  return <button onClick={handleChange}>Swap names</button>;
+};
+
+const CopyPerson = () => {
+  const [person, setPerson] = useAtom(personDataAtom);
+  const handleClick = () => {
+    setPerson({
+      name: { first: person.name.first, last: person.name.last },
+      birth: {
+        year: person.birth.year,
+        month: person.birth.month,
+        day: person.birth.day,
+        time: {
+          hour: person.birth.time.hour,
+          minute: person.birth.time.minute
+        }
+      }
+    });
+  };
+  return <button onClick={handleClick}>Replace person with a deep copy</button>;
+};
+
+// Changes birth year, triggering a change to birthAtom, but not nameAtom.
+const IncrementBirthYear = () => {
+  const [person, setPerson] = useAtom(personDataAtom);
+  const handleClick = () => {
+    setPerson({
+      name: person.name,
+      birth: { ...person.birth, year: person.birth.year + 1 }
+    });
+  };
+  return <button onClick={handleClick}>Increment birth year</button>;
+};
+
+export default function App() {
+  return (
+    <div className="selectAtom">
+      <p className="util">2. selectAtom</p>
+      <Provider>
+        <DisplayName />
+        <DisplayBirthday />
+        <div className="btn-group">
+          <SwapNames />
+          <CopyPerson />
+          <IncrementBirthYear />
+        </div>
+      </Provider>
+    </div>
+  );
+}
+```
+![Ex lesson 8 output](./images/outputExLesson8.PNG "output")
+
+### 3-splitAtoms: The splitAtom utility is useful for when you want to get an atom for each element in a list. It works for read and write atoms that contain a list. When used on such an atom, it returns an atom which itself contains a list of atoms, each corresponding to the respective item in the original list.
+### Additionally, the atom returned by splitAtom contains a dispatch function in the write direction , this is useful for when you want a simple way to modify the original atom with actions such as remove, insert, and move.
+### See the below example for usage.
+
+```javascript
+import { Provider, atom, useAtom, PrimitiveAtom } from 'jotai'
+import { splitAtom } from 'jotai/utils'
+import './styles.css'
+
+// fake datas
+const initialState = [
+  {
+    task: 'Go to Park,
+    done: false,
+  },
+  {
+    task: 'Check the Emails',
+    done: false,
+  },
+]
+
+// data atom
+const todosAtom = atom(initialState)
+const todoAtomsAtom = splitAtom(todosAtom)
+
+const TodoItem = ({
+  todoAtom,
+  remove,
+}: {
+  todoAtom: PrimitiveAtom
+  remove: () => void
+}) => {
+  const [todo, setTodo] = useAtom(todoAtom)
+  return (
+    <div>
+      <input
+        value={todo.task}
+        onChange={(e) => {
+          setTodo((oldValue) => ({ ...oldValue, task: e.target.value }))
+        }}
+      />
+      <input
+        type="checkbox"
+        checked={todo.done}
+        onChange={() => {
+          setTodo((oldValue) => ({ ...oldValue, done: !oldValue.done }))
+        }}
+      />
+      <button onClick={remove}>remove</button>
+    </div>
+  )
+}
+
+const TodoList = () => {
+  const [todoAtoms, dispatch] = useAtom(todoAtomsAtom)
+  return (
+    <ul>
+      {todoAtoms.map((todoAtom) => (
+        <TodoItem
+          todoAtom={todoAtom}
+          remove={() => dispatch({ type: 'remove', atom: todoAtom })}
+        />
+      ))}
+    </ul>
+  )
+}
+
+const App = () => (
+  <Provider>
+    <TodoList />
+  </Provider>
+)
+
+export default App
+```
+
+### in this example we have a mini todolist  similar finally project for complete this Article .
+### we have a default data and with SplitAtoms As we have learned  get items in default data and create component for that show on . we create for now TodoItem component.
+### in TodoItem Component we have a checkbox for check done this todo or not , and we have a input for update todo value , and a delete button 
+### for remove todo in list .
+
+![Ex lesson 8 output](./images/outputExLesson8-2.PNG "output")
+
+### We learned some useful and important utilities in this lesson.
+
 # status:not completed
-=======
-# status:not completed
->>>>>>> 075d586f32eb38c527cec8b0c7bf27439bb2c66c
