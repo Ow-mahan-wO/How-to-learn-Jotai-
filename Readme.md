@@ -240,4 +240,84 @@ export default function ExLesson4() {
 
 ![Ex lesson 4 output](./images/outputExLesson4.PNG "output")
 
+# Lesson 5
+
+### Atom Creators:
+### An atom creator means simply a function that returns an atom or a set of atoms. It's just a function and it's not some features that the library provides, but it's an important pattern to make a fairly complex use case. This avoids the boilerplate of having to set up another atom just to update the state of the first.
+
+```javascript
+const createCountIncreasedAtoms = (initialValue) => {
+  const InitialAtom = atom(initialValue)
+  const ValueAtom = atom((get) => get(InitialAtom))
+  const IncreamentAtom = atom(null, (get, set) => set(InitialAtom, (n) => n + 1))
+  return [ValueAtom, IncreamentAtom]
+}
+
+const [TestAtom1, TestIncAtom1] = createCountIncreasedAtoms(0)
+const [TestAtom2, TestIncAtom2] = createCountIncreasedAtoms(0)
+```
+### Consider this case that use it of write atoms that we learned in previous Lessons: 
+
+```javascript
+const TestAtom1 = atom(0);
+const TestAtom2 = atom(0);
+const TestincAtom1 = atom(null, (get, set) => {
+   set(TestAtom1, n => n + 1);
+});
+const TestincAtom2 = atom(null, (get, set) => {
+   set(TestAtom2, n => n + 1);
+});
+```
+### Although you can attach the suitable actions to the setter of the respective atom, but this also increases boilerplate code when there are more atoms in your code.
+## So simply replace this with the atom creators function.
+### how do we do this ?! like example below.
+
+# Example Lesson5 :
+
+```javascript
+import { atom, useAtom } from 'jotai'
+
+const createCountIncreasedAtoms = (initialValue) => {
+  const InitialAtom = atom(initialValue)
+  const ValueAtom = atom((get) => get(InitialAtom))
+  const IncreamentAtom = atom(null, (get, set) => set(InitialAtom, (n) => n + 1))
+  return [ValueAtom, IncreamentAtom]
+}
+
+const [TestAtom1, TestIncAtom1] = createCountIncreasedAtoms (0)
+const [TestAtom2, TestIncAtom2] = createCountIncreasedAtoms (0)
+
+function ExLesson5() {
+  const [TestCount1] = useAtom(TestAtom1)
+  const [, incTest1] = useAtom(TestIncAtom1)
+  const [TestCount2] = useAtom(TestAtom2)
+  const [, incTest2] = useAtom(TestIncAtom2)
+
+  const onClick1 = () => {
+    incTest1()
+  }
+  const onClick2 = () => {
+    incTest2()
+  }
+
+  return (
+    <>
+      <div>
+        <span>{TestCount1}</span>
+        <button onClick={onClick1}>incTest1</button>
+      </div>
+      <div>
+        <span>{TestCount2}</span>
+        <button onClick={onClick2}>incTest2</button>
+      </div>
+    </>
+  )
+}
+```
+
+![Ex lesson 5 output](./images/outputExLesson5.PNG "output")
+
+### in this example we have two atoms that should be update similar each other .
+### we write a atom creator and handle proccess in that and make it reusable , with pass parameter to custome value in atom creator function .
+
 # status:not completed
