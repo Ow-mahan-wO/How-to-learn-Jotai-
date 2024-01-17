@@ -1,0 +1,52 @@
+.form_box{
+    background-color: rgb(150, 148, 148);
+    border-radius: 1rem;
+    padding: 2rem;
+    width: 40rem;
+}
+.form_box__input{
+    border-radius: 1rem;
+    padding: 1rem;
+    outline: none;
+    border: none;
+    width:78%;
+    font-size: 1rem;
+    font-weight: bold;
+}
+.form_title{
+    font-weight: bold;
+    font-size: 2rem;
+}
+.form_box__button{
+    padding: 1rem 2rem;
+    margin-left:10px;
+    background-color: black;
+    color: white;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+}
+
+@media only screen and (max-width:774px) {
+.form_box{
+    width: 30rem;
+}
+.form_box__input{
+    width: 72%;
+}
+}
+@media only screen and (max-width:568px){
+    .form_box{
+    width: 17rem;
+}
+.form_box__input{
+    width: 89%;
+}
+.form_box__button{
+    width: 100%;
+    margin: 1rem 0;
+}
+.form_box{
+    padding-bottom: .5rem;
+}
+}

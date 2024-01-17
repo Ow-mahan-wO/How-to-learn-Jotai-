@@ -1,0 +1,25 @@
+.TodoCard{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    border-top-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    background-color:rgb(150, 148, 148);
+    width:40rem;
+    margin-top: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+.TodoActionButton{
+    background-color: black;
+    padding: .5rem;
+    border-radius:.5rem;
+    cursor: pointer;
+    margin: .1rem;
+}
+svg{
+color: white;
+width: 1.2rem;
+height: 1.2rem;
+}
