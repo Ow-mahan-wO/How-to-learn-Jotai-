@@ -176,7 +176,9 @@ export default function ExLesson3() {
   );
 }
 ```
-###   
+
+###
+
 ![Ex lesson 3 output](./images/outputExLesson3.PNG "output")
 
 ## Awsome feature:
@@ -201,41 +203,46 @@ const offlineFriends = atom((get) =>
 ### it is greate and easy!!!
 
 # Lesson 4:
+
 ### Read Write atoms :
+
 ### These atoms are the combination of both read-only and write-only atoms.
 
 ```javascript
 const count = atom(1);
-export const readWriteAtom = atom((get) => get(count),
-(get, set) => {
+export const readWriteAtom = atom(
+  (get) => get(count),
+  (get, set) => {
     set(count, get(count) + 1);
-  },
+  }
 );
 ```
+
 ### The first parameter is for reading and the second is for modifying the atom value. Since the readWriteAtom is capable to read and set the original atom value, so we can only export readWriteAtom atom and can hide the original atom in a smaller scope.
 
 ## Example Lesson 4:
 
 ```javascript
-import { atom, useAtom } from 'jotai';
+import { atom, useAtom } from "jotai";
 
 const counter = atom(1);
 export default function ExLesson4() {
-  
- const readWriteAtom = atom((get) => get(counter),
-(get, set) => {
-    set(counter, get(counter) + 1);
-  },
-);
-  const [count,setCount]=useAtom(readWriteAtom)
+  const readWriteAtom = atom(
+    (get) => get(counter),
+    (get, set) => {
+      set(counter, get(counter) + 1);
+    }
+  );
+  const [count, setCount] = useAtom(readWriteAtom);
   return (
     <div>
       <h1>{count}</h1>
       <button onClick={setCount}>Click</button>
     </div>
-  )
+  );
 }
 ```
+
 ### In this example we have a button and h1 element that show count and when clicked button, count increased 1 and update element value:
 
 ![Ex lesson 4 output](./images/outputExLesson4.PNG "output")
@@ -243,62 +250,71 @@ export default function ExLesson4() {
 # Lesson 5
 
 ### Atom Creators:
+
 ### An atom creator means simply a function that returns an atom or a set of atoms. It's just a function and it's not some features that the library provides, but it's an important pattern to make a fairly complex use case. This avoids the boilerplate of having to set up another atom just to update the state of the first.
 
 ```javascript
 const createCountIncreasedAtoms = (initialValue) => {
-  const InitialAtom = atom(initialValue)
-  const ValueAtom = atom((get) => get(InitialAtom))
-  const IncreamentAtom = atom(null, (get, set) => set(InitialAtom, (n) => n + 1))
-  return [ValueAtom, IncreamentAtom]
-}
+  const InitialAtom = atom(initialValue);
+  const ValueAtom = atom((get) => get(InitialAtom));
+  const IncreamentAtom = atom(null, (get, set) =>
+    set(InitialAtom, (n) => n + 1)
+  );
+  return [ValueAtom, IncreamentAtom];
+};
 
-const [TestAtom1, TestIncAtom1] = createCountIncreasedAtoms(0)
-const [TestAtom2, TestIncAtom2] = createCountIncreasedAtoms(0)
+const [TestAtom1, TestIncAtom1] = createCountIncreasedAtoms(0);
+const [TestAtom2, TestIncAtom2] = createCountIncreasedAtoms(0);
 ```
-### Consider this case that use it of write atoms that we learned in previous Lessons: 
+
+### Consider this case that use it of write atoms that we learned in previous Lessons:
 
 ```javascript
 const TestAtom1 = atom(0);
 const TestAtom2 = atom(0);
 const TestincAtom1 = atom(null, (get, set) => {
-   set(TestAtom1, n => n + 1);
+  set(TestAtom1, (n) => n + 1);
 });
 const TestincAtom2 = atom(null, (get, set) => {
-   set(TestAtom2, n => n + 1);
+  set(TestAtom2, (n) => n + 1);
 });
 ```
+
 ### Although you can attach the suitable actions to the setter of the respective atom, but this also increases boilerplate code when there are more atoms in your code.
+
 ## So simply replace this with the atom creators function.
+
 ### how do we do this ?! like example below.
 
 # Example Lesson5 :
 
 ```javascript
-import { atom, useAtom } from 'jotai'
+import { atom, useAtom } from "jotai";
 
 const createCountIncreasedAtoms = (initialValue) => {
-  const InitialAtom = atom(initialValue)
-  const ValueAtom = atom((get) => get(InitialAtom))
-  const IncreamentAtom = atom(null, (get, set) => set(InitialAtom, (n) => n + 1))
-  return [ValueAtom, IncreamentAtom]
-}
+  const InitialAtom = atom(initialValue);
+  const ValueAtom = atom((get) => get(InitialAtom));
+  const IncreamentAtom = atom(null, (get, set) =>
+    set(InitialAtom, (n) => n + 1)
+  );
+  return [ValueAtom, IncreamentAtom];
+};
 
-const [TestAtom1, TestIncAtom1] = createCountIncreasedAtoms (0)
-const [TestAtom2, TestIncAtom2] = createCountIncreasedAtoms (0)
+const [TestAtom1, TestIncAtom1] = createCountIncreasedAtoms(0);
+const [TestAtom2, TestIncAtom2] = createCountIncreasedAtoms(0);
 
 function ExLesson5() {
-  const [TestCount1] = useAtom(TestAtom1)
-  const [, incTest1] = useAtom(TestIncAtom1)
-  const [TestCount2] = useAtom(TestAtom2)
-  const [, incTest2] = useAtom(TestIncAtom2)
+  const [TestCount1] = useAtom(TestAtom1);
+  const [, incTest1] = useAtom(TestIncAtom1);
+  const [TestCount2] = useAtom(TestAtom2);
+  const [, incTest2] = useAtom(TestIncAtom2);
 
   const onClick1 = () => {
-    incTest1()
-  }
+    incTest1();
+  };
   const onClick2 = () => {
-    incTest2()
-  }
+    incTest2();
+  };
 
   return (
     <>
@@ -311,33 +327,41 @@ function ExLesson5() {
         <button onClick={onClick2}>incTest2</button>
       </div>
     </>
-  )
+  );
 }
 ```
 
 ![Ex lesson 5 output](./images/outputExLesson5.PNG "output")
 
 ### in this example we have two atoms that should be update similar each other .
+
 ### we write a atom creator and handle proccess in that and make it reusable , with pass parameter to custome value in atom creator function .
 
 <<<<<<< HEAD
-# Lesson 6 
+
+# Lesson 6
+
 ## Async Read Atoms:
+
 ## Using async atoms, you gain access to real-world data while still managing them directly from your atoms and with incredible ease.
+
 ## We separate async atoms in two main categories , Async read atoms and Async write atoms.
+
 ## Like example below :
 
 ```javascript
 const counter = atom(0);
 const asyncAtom = atom(async (get) => get(counter) * 5);
 ```
+
 ## Jotai is inherently leveraging Suspense to handle asynchronous flows.
 
 ```javascript
 <Suspense fallback={<span>loading...</span>}>
-      <AsyncComponent />
+  <AsyncComponent />
 </Suspense>
 ```
+
 ### But there is a more jotai way of doing this with the loadable api present in jotai/utils. By simply wrapping the atom in loadable util and it returns the value with one of the three states: loading, hasData and hasError.
 
 ```javascript
@@ -359,8 +383,8 @@ const AsyncComponent = () => {
 # Example Lessson 6 :
 
 ```javascript
-import { atom, useAtom } from 'jotai';
-import { Suspense } from 'react'
+import { atom, useAtom } from "jotai";
+import { Suspense } from "react";
 
 const counter = atom(1);
 const asyncAtom = atom(async (get) => get(counter) * 5);
@@ -371,51 +395,64 @@ function AsyncComponent() {
     <div className="app">
       <h1>{asyncCount}</h1>
     </div>
-  )
+  );
 }
 
 export default function ExLesson6() {
-   return (
+  return (
     <Suspense fallback={<span>loading...</span>}>
       <AsyncComponent />
     </Suspense>
-  )
+  );
 }
 ```
-### In example above we have a count atom that read with async and do it count * 5 
-### And in suspense we pass a fallback props with value that wana show in loading new value  .
+
+### In example above we have a count atom that read with async and do it count \* 5
+
+### And in suspense we pass a fallback props with value that wana show in loading new value .
 
 # Lesson 7
+
 ## Async Write Atoms
+
 ## In Async write atoms the write function of atom returns a promise.
-## We pass two parameter in atom , first parameter all the time like write atoms , are null and second parameter are callback fn (set , get) with this the difference we write async keyword before it. 
+
+## We pass two parameter in atom , first parameter all the time like write atoms , are null and second parameter are callback fn (set , get) with this the difference we write async keyword before it.
+
 ## Like this :
 
 ```javascript
 const counter = atom(0);
 const asyncAtom = atom(null, async (set, get) => {
-    // await something
-    set(counter, get(counter) + 1);
+  // await something
+  set(counter, get(counter) + 1);
 });
 ```
+
 ## This is important that , An important take here is that async write function does not trigger the Suspense
+
 ### But an interesting pattern that can be achieved with Jotai is switching from async to sync to trigger suspending when wanted.
 
 ```javascript
-const request = async () => fetch('https://api/...').then((res) => res.json())
-const baseAtom = atom(0)
+const request = async () => fetch("https://api/...").then((res) => res.json());
+const baseAtom = atom(0);
 const Component = () => {
-  const [value, setValue] = useAtom(baseAtom)
+  const [value, setValue] = useAtom(baseAtom);
   const handleClick = () => {
-    setValue(request()) // Will suspend until request resolves
-  }
+    setValue(request()); // Will suspend until request resolves
+  };
   // ...
-}
+};
 ```
+
 ## Example Lesson 7 :
-### In this example we have two component (Suspence , AsyncComponent) 
+
+### In this example we have two component (Suspence , AsyncComponent)
+
 ### In AsyncComponent we have a counter atom that with Click in inc Button increased and fetch data of JsonPlaceholder api (fake api) and show it.
-### And in Suspence we have a default object with data (id,title,etc.) and write Async request for get data in api and so on we take data  and set in useAtom till we can use them .
+
+### And in Suspence we have a default object with data (id,title,etc.) and write Async request for get data in api and so on we take data and set in useAtom till we can use them .
+
 ### And set Click event on button, until the click on button we set request data on atom .
 
 ```javascript
@@ -448,6 +485,7 @@ export default function ExLesson7() {
   )
 }
 ```
+
 ```javascript
 ./Suspence.js
 
@@ -489,10 +527,13 @@ export default function AsyncSuspense() {
   )
 }
 ```
+
 ![Ex lesson 7 output](./images/outputExLesson7.PNG "output")
 
-# Lesson 8 
-### This is an overview of the atom creators/hooks utilities that can be found under jotai/utils. We already covered atomWithStorage and loadable API in previous lessons. 
+# Lesson 8
+
+### This is an overview of the atom creators/hooks utilities that can be found under jotai/utils. We already covered atomWithStorage and loadable API in previous lessons.
+
 ### And we are going to learn a few more together.
 
 ### 1- atomWithReset Creates an atom that could be reset to its initialValue with useResetAtom hook. It works exactly the same way as primitive atom would, but you are also able to set it to a special value RESET.
@@ -545,7 +586,7 @@ const defaultPerson = {
       day: 19,
     }
   }
-  
+
   // Original atom.
   const personAtom = atom(defaultPerson)
   const nameAtom = selectAtom(personAtom, (person) => person.name, deepEqual)
@@ -669,10 +710,13 @@ export default function App() {
   );
 }
 ```
+
 ![Ex lesson 8 output](./images/outputExLesson8.PNG "output")
 
 ### 3-splitAtoms: The splitAtom utility is useful for when you want to get an atom for each element in a list. It works for read and write atoms that contain a list. When used on such an atom, it returns an atom which itself contains a list of atoms, each corresponding to the respective item in the original list.
+
 ### Additionally, the atom returned by splitAtom contains a dispatch function in the write direction , this is useful for when you want a simple way to modify the original atom with actions such as remove, insert, and move.
+
 ### See the below example for usage.
 
 ```javascript
@@ -747,17 +791,22 @@ const App = () => (
 export default App
 ```
 
-### in this example we have a mini todolist  similar finally project for complete this Article .
-### we have a default data and with SplitAtoms As we have learned  get items in default data and create component for that show on . we create for now TodoItem component.
-### in TodoItem Component we have a checkbox for check done this todo or not , and we have a input for update todo value , and a delete button 
+### in this example we have a mini todolist similar finally project for complete this Article .
+
+### we have a default data and with SplitAtoms As we have learned get items in default data and create component for that show on . we create for now TodoItem component.
+
+### in TodoItem Component we have a checkbox for check done this todo or not , and we have a input for update todo value , and a delete button
+
 ### for remove todo in list .
 
 ![Ex lesson 8 output](./images/outputExLesson8-2.PNG "output")
 
 ### We learned some useful and important utils in this lesson.
 
-# Lesson 9 
+# Lesson 9
+
 ### Integrations
+
 ### Updating the state with jotai is simple with the provided set function but things can go complex and requires some extra effort with the nested object states as you have to copy the state at each level with the spread operator ... like so,
 
 ```javascript
@@ -781,7 +830,9 @@ setAtomTodo(state => {
 ```
 
 ### This is a very naive method and there may be a higher chance that you make some mistakes while updating the state like this.
+
 ### To make our life easy we can take advantage of jotai 3rd party library's support. Jotai officially supports Immer, Optics, Zustand , Redux, tRPC, and various other 3rd party integrations.
+
 ### Let's see how we can use immer to directly mutate the state, You have to install immer and jotai-immer to use this feature.
 
 ```
@@ -809,41 +860,387 @@ const updateTodo = () => {
 ## Example Lesson 9 :
 
 ```javascript
-import { useAtom } from 'jotai';
-import { atomWithImmer } from 'jotai-immer';
+import { useAtom } from "jotai";
+import { atomWithImmer } from "jotai-immer";
 
 const todo = {
   todo: {
     person: {
       name: "Mahan",
-        title: {
-          goal: "old todo"
-        },
-    }
-  }
+      title: {
+        goal: "old todo",
+      },
+    },
+  },
 };
 const immerAtom = atomWithImmer(todo);
 
 export default function ExLesson9() {
   const [todoAtom, setAtomTodo] = useAtom(immerAtom);
   const updateTodo = () => {
-    setAtomTodo(state => {
-        state.todo.person.title.goal = "Update title";
-        return state;
+    setAtomTodo((state) => {
+      state.todo.person.title.goal = "Update title";
+      return state;
     });
-  }
+  };
   return (
     <div>
       <h3>Name: {todoAtom.todo.person.name}</h3>
       <p>Todo: {todoAtom.todo.person.title.goal}</p>
       <button onClick={updateTodo}>Update Todo</button>
     </div>
-  )
+  );
 }
 ```
+
 ![Ex lesson 9 output](./images/outputExLesson9.PNG "output")
 
 ### And let’s go to write finall TodoList Project with jotai.
 
+# And let’s go to write finall TodoList Project with jotai.
 
-# status:not completed
+## Jotai Todo List (writed with typeScript)
+
+### Project source code available in finalTodoListProject folder and you can read and use it .
+
+### At first step we should create react project and at second step we should config store and provider and write atoms and export that’s . and if we needed that’s import it in each component.
+
+### And handle different features with the topics we learned before in this project .
+
+### Step 1:
+
+### Create react app and install jotai for do it follow commands below :
+
+```
+npm create vite@latest app
+>>  cd app
+>> npm i
+>> npm i jotai
+
+```
+
+### So already we create app and install jotai in project , now going set provider and create store for states:
+
+### Import provider from jotai and set as parent app component like way below :
+
+```typescript
+./main.tsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import "./index.css";
+import { Provider } from "jotai";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <Provider>
+      <App />
+    </Provider>
+  </React.StrictMode>
+);
+
+```
+
+### In src directory create a file and we call it store.ts and write functions and atom for features
+
+### At first wite a interface for Todo array and that properties .
+
+```typescript
+./store.ts
+export interface Todo {
+    id: number,
+    text: string,
+    completed: boolean
+}
+```
+
+### And for first feature we handle add todo in array , we write a function and pass it two params , param 1 : todos and param2: todo text like this : (return data with Todo type)
+### With spread syntax , we pour it and give a little value to its properties like this :
+
+```typescript
+./store.ts
+export const AddTodo = (todos: Todo[], text: string): Todo[] =>
+    [...todos,
+    {
+        id: Math.max(0, Math.max(...todos.map(({ id }) => id))) + 1, text, completed: false
+    }]
+```
+ 
+### And for handle next feature we going handle delete todo : like before feature we write a function for it and pass two param : param1:todos param2: todo id . and with filter method filter items that this id not equal to param id like this :
+
+```typescript
+./store.ts
+export const DeleteTodo = (todos: Todo[], id: number): Todo[] =>
+    todos.filter((todo) => todo.id != id)
+```
+
+### And for handle next feature we going handle toggle todo for set completed todo or no . we pass two param : param1:todos param2: todo id . we with map method read todos and set  that completed property equal to false like this :
+
+```typescript
+./store.ts
+export const ToggleTodo = (todos: Todo[], id: number): Todo[] =>
+ todos.map((todo) => ({ ...todo, completed: todo.id === id ? !todo.completed : todo.completed, }));
+```
+
+### so we write atoms with names newTodoAtom and todosAtom that newTodoAtom for give todo value and use it and todosAtom for use and give Todos array .
+
+```typescript
+./store.ts
+export const newTodoAtom = atom<string>("")
+export const todosAtom = atom<Todo[]>([])
+```
+
+### now going to write read/write atoms for them.
+
+
+```typescript
+./store.ts
+export const addTodoAtom = atom(() => "", (get, set) => {
+    set(todosAtom, AddTodo(get(todosAtom), get(newTodoAtom)));
+    set(newTodoAtom, "");
+})
+export const ToggleTodoAtom = atom(() => "", (get, set, id: number) => {
+    set(todosAtom, ToggleTodo(get(todosAtom), id));
+    set(newTodoAtom, "");
+})
+export const DeleteTodoAtom = atom(() => "", (get, set, id: number) => {
+    set(todosAtom, DeleteTodo(get(todosAtom), id));
+    set(newTodoAtom, "");
+})
+
+```
+### In all functions like before concepts that we learn we use in read/write atoms and set atoms with new values like above and in end of functions we set empty value for newTodoAtom that enter new todo .
+
+### And for handle dark/light feature we use atomWithStorage as we learned :
+
+```typescript
+./store.ts
+
+export const themeAtom = atomWithStorage('dark', false);
+```
+
+### for handle dark and light mode set condition in classnames and set style module. That on look in components code .
+
+### So after that we going use values and create items :
+### Now Create a component folder and write my components:
+### Components list :
+### -AddTodoForm.tsx  //form for create todo
+### -TodoItem.tsx //todo item 
+### -TodoItemControls.tsx //action buttons (delete / completed)
+
+### That styled with css modules .
+
+### and so use that atoms or functions we import it in each components .
+
+```typescript
+./TodoItemCintrols.tsx
+import { useAtom } from "jotai";
+import { DeleteTodoAtom, ToggleTodoAtom } from "../../store";
+import Styles from "./TodoItem.module.css";
+
+interface PropsType {
+  data: { id: number; text: string; completed: boolean };
+}
+const TodoItemControls: React.FC<PropsType> = ({ data }): React.ReactNode => {
+  const [, deleteTodo] = useAtom(DeleteTodoAtom);
+  const [, toggleTodo] = useAtom(ToggleTodoAtom);
+  return (
+    <div>
+      <button
+        className={Styles.TodoActionButton}
+        
+        onClick={() => deleteTodo(data.id)}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-6 h-6">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+          />
+        </svg>
+      </button>
+      <button
+        className={Styles.TodoActionButton}
+        disabled={data.completed? true : false}
+        onClick={() => toggleTodo(data.id)}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className={Styles.svg}>
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
+          />
+        </svg>
+      </button>
+    </div>
+  );
+};
+
+export default TodoItemControls;
+```
+
+### in this component we have two button for handle delete and complete todo feature that import ToggleTodoAtom and DeleteTodoAtom and use it for useAtom hook . and set it as onClick event and pass params .
+
+```typescript
+./AddTodoForm.tsx
+
+import React from "react";
+import Styles from "./AddTodoForm.module.css";
+import { useAtom } from "jotai";
+import { addTodoAtom, newTodoAtom, themeAtom } from "../../store";
+
+const AddToDoForm: React.FC = (): React.ReactNode => {
+  const [newTodo, setNewTodo] = useAtom(newTodoAtom);
+  const [theme]=useAtom(themeAtom)
+  const [, addtodo] = useAtom(addTodoAtom);
+  function SubmitFormHandler(event: Event | undefined) {
+    event?.preventDefault();
+    addtodo();
+  }
+  return (
+    <>
+      <center>
+        <p className={Styles.form_title}>Jotai TodoList</p>
+      </center>
+      <div className={theme?Styles.form_box__dark:Styles.form_box}>
+        <form onSubmit={() => SubmitFormHandler(event)}>
+          <input
+            value={newTodo}
+            className={theme?Styles.form_box__input__dark:Styles.form_box__input}
+            type="text"
+            onChange={(event) => setNewTodo(event!.target!.value)}
+          />
+          <button className={Styles.form_box__button} type="submit">
+            Add
+          </button>
+        </form>
+      </div>
+    </>
+  );
+};
+
+export default AddToDoForm;
+```
+
+### in this component we imported newTodo  for use it for set todo value and imported AddTodoAtom for add todo in List and set that in click events .
+
+```typescript
+./App.tsx
+
+import { useAtom } from "jotai";
+import "./App.css";
+import AddToDoForm from "./Components/AddToDoForm/AddTodoForm";
+import TodoItem from "./Components/TodoItem/TodoItem";
+import { themeAtom, todosAtom } from "./store";
+
+function App() {
+  const [todos] = useAtom(todosAtom);
+  const [theme, setTheme] = useAtom(themeAtom);
+  return (
+    <>
+      <div className={theme?"body__dark":"body__light"}>
+        <div className="box">
+          <button
+            className="themeToggleButton"
+            onClick={() => setTheme((theme) => !theme)}>
+            {theme === true ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"
+                />
+              </svg>
+            )}
+          </button>
+          <AddToDoForm />
+        </div>
+        <div>
+          {todos?.map((todo, i) => (
+            <div key={i}>
+              <TodoItem todo={todo} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default App;
+```
+
+
+### in App component we imported todos data from store and with map mathode create items with TodoItem component and pass data with props to use it . and set other components ….
+
+
+```typescript
+./TodoItem.tsx
+
+import { useAtom } from "jotai";
+import Styles from "./TodoItem.module.css";
+import TodoItemControls from "./TodoItemControls";
+import { themeAtom } from "../../store";
+
+const TodoItem: React.FC<any> = ({ todo }): React.ReactNode => {
+  const [theme] = useAtom(themeAtom)
+  return (
+    <>
+      <div className={todo.completed?Styles.TodoCart__Completed:theme?Styles.TodoCard__dark:Styles.TodoCard}>
+        <div>{todo.text}</div>
+        <TodoItemControls data={todo} />
+      </div>
+    </>
+  );
+};
+
+export default TodoItem;
+```
+
+### in TodoItem component we give data from props and create item and styled it  and set datas like above .
+
+### output LightMode:
+
+![Final Project output](./images/outuptFinalProjectLigthmode.PNG "output")
+
+### outpur DarkMode :
+
+![Final Project output](./images/outuptFinalProjectDarkmode.PNG "output")
+
+# The end  of  how-to-learn-jotai article . I hope this article useful for you .
+
+### Online Link Final Project: 
+### Repository Link :
+### My Github : 
+
+# status:completed
