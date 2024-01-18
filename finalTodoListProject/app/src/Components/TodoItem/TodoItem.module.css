@@ -1,25 +1,53 @@
-.TodoCard{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-    border-top-right-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-    background-color:rgb(150, 148, 148);
-    width:40rem;
-    margin-top: 1.5rem;
-    font-weight: bold;
-    color: white;
+button:disabled{
+  background-color: white;
+  cursor: not-allowed;
+  svg{
+    color: black;
+  }
 }
-.TodoActionButton{
-    background-color: black;
-    padding: .5rem;
-    border-radius:.5rem;
-    cursor: pointer;
-    margin: .1rem;
+.TodoCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-top-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  background-color: rgb(150, 148, 148);
+  width: 40rem;
+  margin-top: 1.5rem;
+  font-weight: bold;
+  color: white;
 }
-svg{
-color: white;
-width: 1.2rem;
-height: 1.2rem;
+.TodoActionButton {
+  background-color: black;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  margin: 0.1rem;
+  border: 1px solid rgb(150, 148, 148);
+  &:hover {
+    background-color: white;
+    svg {
+      color: black;
+    }
+  }
+}
+svg {
+  color: white;
+  width: 1.4rem;
+  height: 1.4rem;
+}
+.TodoCart__Completed{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-top-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  background-color: black;
+  width: 40rem;
+  margin-top: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: line-through black 3px;
 }

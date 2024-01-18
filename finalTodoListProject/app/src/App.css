@@ -1,6 +1,10 @@
 * {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+body{
+  margin: 0;
+}
 .Container {
   align-items: center;
   width: 100%;
@@ -16,6 +20,8 @@
   border: none;
   width: 3rem;
   height: 3rem;
+  padding-top: 0.3rem;
+  padding-left: 0.4rem;
   position: absolute;
   top: 2rem;
   cursor: pointer;

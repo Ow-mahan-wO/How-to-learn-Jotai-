@@ -1,17 +1,26 @@
-import Styles from './TodoItem.module.css'
+import { useAtom } from "jotai";
+import { DeleteTodoAtom, ToggleTodoAtom } from "../../store";
+import Styles from "./TodoItem.module.css";
 
-const TodoItemControls:React.FC = (): React.ReactNode => {
+interface PropsType {
+  data: { id: number; text: string; completed: boolean };
+}
+const TodoItemControls: React.FC<PropsType> = ({ data }): React.ReactNode => {
+  const [, deleteTodo] = useAtom(DeleteTodoAtom);
+  const [, toggleTodo] = useAtom(ToggleTodoAtom);
   return (
     <div>
-      <button className={Styles.TodoActionButton}>
+      <button
+        className={Styles.TodoActionButton}
+        
+        onClick={() => deleteTodo(data.id)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6"
-        >
+          className="w-6 h-6">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -19,15 +28,17 @@ const TodoItemControls:React.FC = (): React.ReactNode => {
           />
         </svg>
       </button>
-      <button className={Styles.TodoActionButton}>
+      <button
+        className={Styles.TodoActionButton}
+        disabled={data.completed? true : false}
+        onClick={() => toggleTodo(data.id)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className={Styles.svg}
-        >
+          className={Styles.svg}>
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
