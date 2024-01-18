@@ -280,7 +280,7 @@ const TestincAtom2 = atom(null, (get, set) => {
 
 Although you can attach the suitable actions to the setter of the respective atom, but this also increases boilerplate code when there are more atoms in your code.
 
-## So simply replace this with the atom creators function.
+So simply replace this with the atom creators function.
 
 how do we do this ?! like example below.
 
@@ -335,17 +335,16 @@ in this example we have two atoms that should be update similar each other .
 
 we write a atom creator and handle proccess in that and make it reusable , with pass parameter to custome value in atom creator function .
 
-<<<<<<< HEAD
 
 # Lesson 6
 
-## Async Read Atoms:
+### Async Read Atoms:
 
-## Using async atoms, you gain access to real-world data while still managing them directly from your atoms and with incredible ease.
+Using async atoms, you gain access to real-world data while still managing them directly from your atoms and with incredible ease.
 
-## We separate async atoms in two main categories , Async read atoms and Async write atoms.
+We separate async atoms in two main categories , Async read atoms and Async write atoms.
 
-## Like example below :
+Like example below :
 
 ```javascript
 const counter = atom(0);
@@ -411,13 +410,13 @@ And in suspense we pass a fallback props with value that wana show in loading ne
 
 # Lesson 7
 
-## Async Write Atoms
+Async Write Atoms
 
-## In Async write atoms the write function of atom returns a promise.
+In Async write atoms the write function of atom returns a promise.
 
-## We pass two parameter in atom , first parameter all the time like write atoms , are null and second parameter are callback fn (set , get) with this the difference we write async keyword before it.
+We pass two parameter in atom , first parameter all the time like write atoms , are null and second parameter are callback fn (set , get) with this the difference we write async keyword before it.
 
-## Like this :
+Like this :
 
 ```javascript
 const counter = atom(0);
@@ -427,7 +426,7 @@ const asyncAtom = atom(null, async (set, get) => {
 });
 ```
 
-## This is important that , An important take here is that async write function does not trigger the Suspense
+This is important that , An important take here is that async write function does not trigger the Suspense
 
 But an interesting pattern that can be achieved with Jotai is switching from async to sync to trigger suspending when wanted.
 
