@@ -29,8 +29,8 @@ body{
   border-radius: 100%;
   width: 3rem;
   height: 3rem;
-  padding-top: 0.3rem;
-  padding-left: 0.4rem;
+  padding-top: 4px;
+  padding-left: 4px;
   position: absolute;
   top: 2rem;
   cursor: pointer;

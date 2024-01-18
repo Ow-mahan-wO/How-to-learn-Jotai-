@@ -65,3 +65,21 @@ svg {
   color: white;
   text-decoration: line-through black 3px;
 }
+
+@media only screen and (max-width:758px) {
+  .TodoCard{
+    width: 30rem;
+  }
+  .TodoCard__dark{
+    width: 30rem;
+  }
+}
+@media only screen and (max-width:568px){
+  .TodoCard{
+    width: 17rem;
+  }
+  .TodoCard__dark{
+    width: 17rem;
+  }
+  
+}
