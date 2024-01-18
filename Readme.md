@@ -1239,8 +1239,9 @@ export default TodoItem;
 
 # The end  of  how-to-learn-jotai article . I hope this article useful for you .
 
-### Online Link Final Project: 
 ### Repository Link :
+# https://github.com/Ow-mahan-wO/How-to-learn-Jotai-
 ### My Github : 
+# https://github.com/Ow-mahan-wO
 
 # status:completed
