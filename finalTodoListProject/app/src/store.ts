@@ -22,7 +22,7 @@ export const ToggleTodo = (todos: Todo[], id: number): Todo[] =>
 
 export const newTodoAtom = atom<string>("")
 export const todosAtom = atom<Todo[]>([])
-
+export const themeAtom = atomWithStorage('dark', false);
 export const addTodoAtom = atom(() => "", (get, set) => {
     set(todosAtom, AddTodo(get(todosAtom), get(newTodoAtom)));
     set(newTodoAtom, "");

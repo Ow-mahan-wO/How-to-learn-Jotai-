@@ -18,6 +18,19 @@ button:disabled{
   font-weight: bold;
   color: white;
 }
+.TodoCard__dark {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-top-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  background-color: white;
+  width: 40rem;
+  margin-top: 1.5rem;
+  font-weight: bold;
+  color: black;
+}
 .TodoActionButton {
   background-color: black;
   padding: 0.5rem;
@@ -45,6 +58,7 @@ svg {
   border-top-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
   background-color: black;
+  border: 1px solid white;
   width: 40rem;
   margin-top: 1.5rem;
   font-weight: bold;
