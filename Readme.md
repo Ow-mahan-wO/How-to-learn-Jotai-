@@ -1235,12 +1235,13 @@ export default TodoItem;
 
 ### outpur DarkMode :
 
-![Final Project output](./images/outuptFinalProjectDarkmode.PNG "output")
+![Final Project output](./images/outputFinalProjectDarkmode.PNG "output")
 
 # The end  of  how-to-learn-jotai article . I hope this article useful for you .
 
-### Online Link Final Project: 
 ### Repository Link :
+# https://github.com/Ow-mahan-wO/How-to-learn-Jotai-
 ### My Github : 
+# https://github.com/Ow-mahan-wO
 
 # status:completed
