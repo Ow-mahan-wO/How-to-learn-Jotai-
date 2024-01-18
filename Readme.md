@@ -1235,7 +1235,7 @@ export default TodoItem;
 
 ### outpur DarkMode :
 
-![Final Project output](./images/outuptFinalProjectDarkmode.PNG "output")
+![Final Project output](./images/outputFinalProjectDarkmode.PNG "output")
 
 # The end  of  how-to-learn-jotai article . I hope this article useful for you .
 
